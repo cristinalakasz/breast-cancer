@@ -1,4 +1,4 @@
-name: breast_cancer_ml
+name: breast-cancer
 channels:
   - conda-forge
   - defaults
