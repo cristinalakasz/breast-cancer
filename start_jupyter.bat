@@ -1,5 +1,5 @@
 @echo off
 echo Starting Jupyter Notebook for Breast Cancer ML Project...
-call breast_cancer_env\Scripts\activate.bat
+call conda activate breast_cancer_ml
 jupyter notebook
 pause

@@ -7,20 +7,26 @@ This project implements a comprehensive machine learning solution for predicting
 ```
 breast-cancer/
 ├── README.md                 # This file
-├── requirements.txt          # Python dependencies
-├── setup_env.bat            # Virtual environment setup script
+├── environment.yml           # Conda environment specification
+├── requirements.txt          # Alternative pip requirements (legacy)
+├── setup_env.bat            # Conda environment setup script
 ├── activate_env.bat         # Activate environment script
 ├── start_jupyter.bat        # Start Jupyter Notebook script
 ├── data/
 │   └── data.csv            # Dataset (if using external data)
-└── breast_cancer_env/      # Virtual environment (created after setup)
+└── models/                 # Saved models (created after training)
 ```
 
 ## Quick Start
 
-### 1. Set Up Virtual Environment
+### Prerequisites
 
-Run the setup script to create and configure the virtual environment:
+- **Anaconda** or **Miniconda** installed on your system
+- Download from: https://www.anaconda.com/products/distribution
+
+### 1. Set Up Conda Environment
+
+Run the setup script to create and configure the Conda environment:
 
 ```bash
 # Double-click or run from command prompt
@@ -29,21 +35,21 @@ setup_env.bat
 
 This will:
 
-- Create a Python virtual environment named `breast_cancer_env`
-- Install all required packages from `requirements.txt`
+- Create a Conda environment named `breast_cancer_ml`
+- Install all required packages from `environment.yml`
 - Set up a Jupyter kernel for the project
 - Configure everything needed to run the notebook
 
 ### 2. Activate Environment
 
-To work with the project, activate the virtual environment:
+To work with the project, activate the Conda environment:
 
 ```bash
 # Option 1: Use the activation script
 activate_env.bat
 
 # Option 2: Manual activation
-breast_cancer_env\Scripts\activate.bat
+conda activate breast_cancer_ml
 ```
 
 ### 3. Start Jupyter Notebook
@@ -58,35 +64,44 @@ start_jupyter.bat
 jupyter notebook
 ```
 
-## Dependencies
+## Environment Management
 
-The project requires the following Python packages:
+### Conda Environment Details
 
-### Core Libraries
+- **Name**: `breast_cancer_ml`
+- **Python Version**: 3.9
+- **Package Manager**: Conda + pip (for select packages)
+
+### Dependencies
+
+The project requires the following packages (automatically installed via `environment.yml`):
+
+#### Core Libraries
 
 - **pandas**: Data manipulation and analysis
 - **numpy**: Numerical computing
 - **matplotlib**: Data visualization
 - **seaborn**: Statistical data visualization
 
-### Machine Learning
+#### Machine Learning
 
 - **scikit-learn**: Machine learning algorithms and tools
 - **joblib**: Model serialization
 
-### Jupyter Environment
+#### Jupyter Environment
 
 - **jupyter**: Jupyter Notebook environment
 - **ipykernel**: Jupyter kernel support
 - **notebook**: Notebook interface
 
-### Additional Tools
+#### Additional Tools
 
-- **plotly**: Interactive visualizations
+- **plotly**: Interactive visualizations (via pip)
 - **scipy**: Scientific computing
 - **pytest**: Testing framework
 - **black**: Code formatting
 - **flake8**: Code linting
+- **numba**: Performance optimization
 
 ## Project Features
 
@@ -128,8 +143,8 @@ The project requires the following Python packages:
 
 ### Step 1: Environment Setup
 
-1. Ensure Python 3.7+ is installed on your system
-2. Run `setup_env.bat` to create the virtual environment
+1. Ensure Anaconda/Miniconda is installed on your system
+2. Run `setup_env.bat` to create the Conda environment
 3. Wait for all packages to install (this may take a few minutes)
 
 ### Step 2: Working with the Project
@@ -149,48 +164,94 @@ The project requires the following Python packages:
 
 ### Common Issues
 
-**Issue**: Virtual environment creation fails
-**Solution**: Ensure Python is properly installed and added to PATH
+**Issue**: Conda command not found
+**Solution**: Ensure Anaconda/Miniconda is properly installed and added to PATH
 
-**Issue**: Package installation errors
-**Solution**: Upgrade pip using `python -m pip install --upgrade pip`
+**Issue**: Environment creation fails
+**Solution**:
+
+```bash
+# Clean conda cache and try again
+conda clean --all
+conda env create -f environment.yml
+```
+
+**Issue**: Package conflicts
+**Solution**:
+
+```bash
+# Remove existing environment and recreate
+conda env remove -n breast_cancer_ml
+conda env create -f environment.yml
+```
 
 **Issue**: Jupyter kernel not found
 **Solution**: Reinstall the kernel using:
 
 ```bash
-python -m ipykernel install --user --name=breast_cancer_env --display-name="Breast Cancer ML"
+conda activate breast_cancer_ml
+python -m ipykernel install --user --name=breast_cancer_ml --display-name="Breast Cancer ML"
 ```
 
 **Issue**: Import errors in notebook
 **Solution**: Ensure the correct kernel is selected in Jupyter (Kernel → Change Kernel → Breast Cancer ML)
 
-### Environment Management
+### Environment Management Commands
 
-To update packages:
+**List all conda environments:**
 
 ```bash
-# Activate environment first
-activate_env.bat
-
-# Update specific package
-pip install --upgrade package_name
-
-# Update all packages
-pip install --upgrade -r requirements.txt
+conda env list
 ```
 
-To deactivate the environment:
+**Update the environment:**
 
 ```bash
-deactivate
+conda activate breast_cancer_ml
+conda env update -f environment.yml
 ```
 
-To remove the environment:
+**Export current environment:**
 
 ```bash
-# Delete the breast_cancer_env folder
-rmdir /s breast_cancer_env
+conda activate breast_cancer_ml
+conda env export > environment_backup.yml
+```
+
+**Remove the environment:**
+
+```bash
+conda env remove -n breast_cancer_ml
+```
+
+**Install additional packages:**
+
+```bash
+conda activate breast_cancer_ml
+conda install package_name
+# or
+pip install package_name
+```
+
+## Alternative Setup Methods
+
+### Method 1: Manual Conda Setup
+
+```bash
+# Create environment manually
+conda create -n breast_cancer_ml python=3.9
+conda activate breast_cancer_ml
+conda install -c conda-forge pandas numpy matplotlib seaborn scikit-learn jupyter
+pip install plotly
+```
+
+### Method 2: Using pip (if Conda not available)
+
+```bash
+# Use the legacy requirements.txt
+python -m venv breast_cancer_env
+breast_cancer_env\Scripts\activate
+pip install -r requirements.txt
 ```
 
 ## Results Expected
@@ -211,6 +272,15 @@ This project demonstrates:
 - **Risk Assessment**: Identification of high-risk cases
 - **Quality Assurance**: Second-opinion validation system
 - **Screening Enhancement**: Improved screening program effectiveness
+
+## Performance Optimization
+
+### Conda vs pip advantages:
+
+- **Faster installs**: Binary packages vs compilation
+- **Better dependency resolution**: Conda handles complex dependencies
+- **Cross-platform compatibility**: Consistent environments across OS
+- **Scientific computing focus**: Optimized for data science workflows
 
 ## Disclaimer
 
