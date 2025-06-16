@@ -23,21 +23,55 @@ This project is a machine learning-based GUI application for predicting breast c
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-repo/breast-cancer-prediction.git
-   cd breast-cancer-prediction
+   git clone https://github.com/cristinalakasz/breast-cancer.git
+   cd breast-cancer
    ```
 2. Install the required Python libraries:
    ```bash
    pip install -r requirements.txt
    ```
 
+## Setting Up the Environment with Conda
+
+1. Install Anaconda or Miniconda:
+
+   - Download from: https://www.anaconda.com/products/distribution
+
+2. Create the environment using the provided `environment.yml` file:
+
+   ```bash
+   conda env create -f environment.yml
+   ```
+
+3. Activate the environment:
+
+   ```bash
+   conda activate breast_cancer_env
+   ```
+
+4. Ensure the trained model file (`breast_cancer_model.pkl`) is present in the project directory.
+
 ## Running the Application
 
-1. Ensure the trained model file (`breast_cancer_model.pkl`) is present in the project directory.
-2. Run the GUI application:
+1. Run the GUI application:
    ```bash
    python gui.py
    ```
+
+## Running the Notebook
+
+1. Start Jupyter Notebook:
+
+   ```bash
+   jupyter notebook
+   ```
+
+2. Open the notebook file (`breast_cancer_prediction.ipynb`) from the project directory.
+
+3. Run the cells sequentially to:
+   - Load the trained model.
+   - Input feature values manually or load sample data.
+   - Perform predictions and view results.
 
 ## Using the Application
 
